@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A premium Apple-style financial goal tracking dashboard to visualize, plan, and achieve your money goals.">
+  <title>Twig Goal — Money Goal Achiever</title>
+  <!-- Google Fonts for premium sans-serif typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/css/main.css">
+</head>
+<body class="theme-dark">
+  <!-- Main Grid Layout -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="app-logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="url(#logo-grad)" stroke-width="3" stroke-linecap="round" />
+            <circle cx="12" cy="12" r="6" stroke="url(#logo-grad-inner)" stroke-width="2.5" stroke-linecap="round" />
+            <defs>
+              <linearGradient id="logo-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#34C759" />
+                <stop offset="0.5" stop-color="#007AFF" />
+                <stop offset="1" stop-color="#AF52DE" />
+              </linearGradient>
+              <linearGradient id="logo-grad-inner" x1="6" y1="6" x2="18" y2="18" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FF9500" />
+                <stop offset="1" stop-color="#FF2D55" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="app-name">Twig Goal</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-menu">
+        <button class="nav-item active" data-tab="dashboard" id="nav-dashboard">
+          <svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="9" rx="1.5" />
+            <rect x="14" y="3" width="7" height="5" rx="1.5" />
+            <rect x="14" y="12" width="7" height="9" rx="1.5" />
+            <rect x="3" y="16" width="7" height="5" rx="1.5" />
+          </svg>
+          Dashboard
+        </button>
+        <button class="nav-item" data-tab="goals" id="nav-goals">
+          <svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 2v20M2 12h20" stroke-dasharray="1 3" />
+            <circle cx="12" cy="12" r="4" fill="currentColor" fill-opacity="0.1" />
+            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+          </svg>
+          My Goals
+        </button>
+        <button class="nav-item" data-tab="analytics" id="nav-analytics">
+          <svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10" stroke-linecap="round" />
+            <line x1="12" y1="20" x2="12" y2="4" stroke-linecap="round" />
+            <line x1="6" y1="20" x2="6" y2="14" stroke-linecap="round" />
+            <path d="M3 20h18" stroke-linecap="round" />
+          </svg>
+          Analytics
+        </button>
+        <button class="nav-item" data-tab="settings" id="nav-settings">
+          <svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          Settings
+        </button>
+      </nav>
+      
+      <!-- Premium Quick Summary in Sidebar -->
+      <div class="sidebar-card">
+        <h3>Total Savings</h3>
+        <p class="sidebar-balance" id="sidebar-total-savings">$0.00</p>
+        <div class="mini-progress-track">
+          <div class="mini-progress-fill" id="sidebar-progress-fill" style="width: 0%"></div>
+        </div>
+        <p class="mini-progress-label" id="sidebar-progress-label">0% of total targets</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Navigation Header -->
+      <header class="app-header">
+        <div class="header-info">
+          <span class="current-date" id="current-date">Sunday, June 7</span>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="btn-add-goal">
+            <svg class="sf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Add Goal
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW: Dashboard -->
+      <section class="tab-view active" id="view-dashboard">
+        <!-- Quick Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon-wrapper color-green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="6" width="20" height="12" rx="2" />
+                <circle cx="12" cy="12" r="3" />
+                <path d="M6 12h.01M18 12h.01" stroke-width="3" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total Saved</span>
+              <span class="stat-value" id="stat-total-saved">$0.00</span>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon-wrapper color-blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Remaining Target</span>
+              <span class="stat-value" id="stat-total-target">$0.00</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper color-purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Goals Tracked</span>
+              <span class="stat-value" id="stat-goals-count">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper color-orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Monthly Target</span>
+              <span class="stat-value" id="stat-monthly-target">$0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rings & Dashboard Details -->
+        <div class="dashboard-details-grid">
+          
+          <!-- Apple Activity Rings-style container -->
+          <div class="dashboard-panel panel-rings">
+            <div class="panel-header">
+              <h2>Activity Rings</h2>
+              <span class="panel-sub">Top goal tracking</span>
+            </div>
+            <div class="rings-visualization">
+              <div class="rings-svg-wrapper">
+                <!-- Overlapping SVGs simulating Apple Fitness rings -->
+                <svg class="apple-rings-svg" viewBox="0 0 200 200">
+                  <defs>
+                    <linearGradient id="grad-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#007AFF" />
+                      <stop offset="100%" stop-color="#5AC8FA" />
+                    </linearGradient>
+                    <linearGradient id="grad-green" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#34C759" />
+                      <stop offset="100%" stop-color="#30D158" />
+                    </linearGradient>
+                    <linearGradient id="grad-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#AF52DE" />
+                      <stop offset="100%" stop-color="#BF5AF2" />
+                    </linearGradient>
+                    <linearGradient id="grad-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#FF9500" />
+                      <stop offset="100%" stop-color="#FF9F0A" />
+                    </linearGradient>
+                    <linearGradient id="grad-pink" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#FF2D55" />
+                      <stop offset="100%" stop-color="#FF375F" />
+                    </linearGradient>
+                    <linearGradient id="grad-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#5AC8FA" />
+                      <stop offset="100%" stop-color="#007AFF" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Outer ring track & fill (Goal 1 - Indigo) -->
+                  <circle class="ring-track" cx="100" cy="100" r="80" />
+                  <circle class="ring-fill ring-outer" id="apple-ring-1" cx="100" cy="100" r="80" />
+                  
+                  <!-- Middle ring track & fill (Goal 2 - Mint) -->
+                  <circle class="ring-track" cx="100" cy="100" r="58" />
+                  <circle class="ring-fill ring-middle" id="apple-ring-2" cx="100" cy="100" r="58" />
+                  
+                  <!-- Inner ring track & fill (Goal 3 - Coral) -->
+                  <circle class="ring-track" cx="100" cy="100" r="36" />
+                  <circle class="ring-fill ring-inner" id="apple-ring-3" cx="100" cy="100" r="36" />
+                </svg>
+              </div>
+              <div class="rings-legend" id="rings-legend-list">
+                <!-- Dynamically populated legends -->
+                <div class="legend-item empty-state">
+                  <span>Add goals to see progress rings</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Insights & Next Milestones -->
+          <div class="dashboard-panel panel-insights">
+            <div class="panel-header">
+              <h2>Smart Insights</h2>
+              <span class="panel-sub">AI projections & recommendations</span>
+            </div>
+            <div class="insights-list" id="insights-container">
+              <!-- Dynamically populated insights -->
+              <div class="insight-row empty-state">
+                <p>Add some financial goals to generate intelligence recommendations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Section -->
+        <div class="dashboard-panel activity-panel">
+          <div class="panel-header-with-action">
+            <div>
+              <h2>Recent Savings Log</h2>
+              <span class="panel-sub">Latest contribution logs</span>
+            </div>
+          </div>
+          <div class="activity-table-wrapper">
+            <table class="activity-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Goal</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="recent-activity-tbody">
+                <!-- Dynamically loaded rows -->
+                <tr>
+                  <td colspan="5" class="table-empty">No transactions logged yet. Let's make a deposit!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: Goals Grid -->
+      <section class="tab-view" id="view-goals">
+        <div class="goals-grid-header">
+          <h2>All Financial Goals</h2>
+          <div class="goals-filter-bar">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">In Progress</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+          </div>
+        </div>
+        
+        <div class="goals-grid" id="goals-grid-container">
+          <!-- Dynamically populated goals cards -->
+        </div>
+      </section>
+
+      <!-- VIEW: Analytics -->
+      <section class="tab-view" id="view-analytics">
+        <div class="analytics-layout">
+          <div class="dashboard-panel chart-panel">
+            <div class="panel-header">
+              <h2>Goal Progress Comparison</h2>
+              <span class="panel-sub">Visualizing how your current savings compare against targets</span>
+            </div>
+            <div class="chart-container" id="bar-chart-container">
+              <!-- Dynamically generated SVG Bar chart goes here -->
+              <div class="chart-placeholder">
+                <p>Create goals to populate progress analytics</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="analytics-grid">
+            <div class="dashboard-panel">
+              <div class="panel-header">
+                <h2>Time to Complete</h2>
+                <span class="panel-sub">Based on current savings pace</span>
+              </div>
+              <div class="progress-projection-list" id="projection-list">
+                <!-- Dynamically filled with projected target completion timeframes -->
+                <div class="empty-state">No goals tracked for projection.</div>
+              </div>
+            </div>
+            
+            <div class="dashboard-panel">
+              <div class="panel-header">
+                <h2>Savings Distribution</h2>
+                <span class="panel-sub">Allocation across goals</span>
+              </div>
+              <div class="chart-container" id="distribution-chart-container">
+                <!-- SVG pie chart or donut chart goes here -->
+                <div class="chart-placeholder">
+                  <p>Add deposits to view allocation</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: Settings -->
+      <section class="tab-view" id="view-settings">
+        <div class="settings-container">
+          <div class="settings-card">
+            <h2>Appearance</h2>
+            <p class="settings-desc">Choose between a premium Dark appearance or clean Light appearance.</p>
+            <div class="theme-selection">
+              <button class="theme-option active" id="theme-dark-btn">
+                <div class="theme-preview dark"></div>
+                <span>Dark Mode</span>
+              </button>
+              <button class="theme-option" id="theme-light-btn">
+                <div class="theme-preview light"></div>
+                <span>Light Mode</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h2>Currency Settings</h2>
+            <p class="settings-desc">Select your preferred currency. All targets and logs will be formatted accordingly.</p>
+            <div class="form-group" style="max-width: 300px; margin-bottom: 0;">
+              <select id="settings-currency">
+                <option value="USD">US Dollar ($)</option>
+                <option value="EUR">Euro (€)</option>
+                <option value="GBP">British Pound (£)</option>
+                <option value="JPY">Japanese Yen (¥)</option>
+                <option value="INR">Indian Rupee (₹)</option>
+                <option value="AUD">Australian Dollar (A$)</option>
+                <option value="CAD">Canadian Dollar (C$)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h2>Cloud Sync & Backup</h2>
+            <p class="settings-desc">Link devices globally by setting up a free database. Copy your Sync Code to access your data on another device.</p>
+            
+            <div class="form-group" style="max-width: 400px; margin-bottom: 16px;">
+              <label>Database Connection Status</label>
+              <div id="db-status-badge" style="display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase;">
+                Checking...
+              </div>
+            </div>
+
+            <div class="form-group" style="max-width: 400px; margin-bottom: 16px;">
+              <label>Your Device Sync Code</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="settings-sync-code" readonly style="flex: 1; font-family: monospace; background-color: var(--sidebar-active-bg);">
+                <button class="btn btn-secondary" id="btn-copy-sync-code" style="padding: 10px 14px;">Copy</button>
+              </div>
+            </div>
+
+            <div class="form-group" style="max-width: 400px; margin-bottom: 20px;">
+              <label for="settings-link-code">Link Another Device's Sync Code</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="settings-link-code" placeholder="Paste another device sync code here">
+                <button class="btn btn-primary" id="btn-link-device">Link</button>
+              </div>
+            </div>
+
+            <div class="settings-actions" style="display: flex; flex-wrap: wrap; gap: 12px;">
+              <button class="btn btn-secondary" id="btn-export-data">Export Data 📥</button>
+              <button class="btn btn-secondary" id="btn-import-data">Import Data 📤</button>
+              <button class="btn btn-secondary" id="btn-seed-data">Seed Demo Data</button>
+              <button class="btn btn-danger" id="btn-reset-data">Reset All Data</button>
+              <input type="file" id="import-file-input" accept=".json" style="display: none;">
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h2>About Twig Goal</h2>
+            <p class="settings-desc">Twig Goal is a minimalist finance client built to align with human psychology. By visualizing money as branches and twigs (like fitness goals), we lower the cognitive barrier to consistent savings habits.</p>
+            <div class="version-tag">Version 1.0.0 (Apple Aesthetic Client)</div>
+          </div>
+        </div>
+      </section>
+      
+    </main>
+  </div>
+
+  <!-- MODAL: Add / Edit Goal -->
+  <div class="modal-backdrop" id="goal-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="goal-modal-title">Create Goal</h2>
+        <button class="modal-close-btn" id="btn-close-goal-modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <form id="goal-form" class="modal-form">
+        <input type="hidden" id="goal-id">
+        <div class="form-group">
+          <label for="goal-name">Goal Name</label>
+          <input type="text" id="goal-name" placeholder="e.g. iPhone 18 Pro Max" required>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="goal-target">Target Amount <span class="currency-label-sign">($)</span></label>
+            <input type="number" id="goal-target" min="1" placeholder="1200" required>
+          </div>
+          <div class="form-group">
+            <label for="goal-current">Starting Savings <span class="currency-label-sign">($)</span></label>
+            <input type="number" id="goal-current" min="0" value="0" required>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="goal-date">Target Date</label>
+            <input type="date" id="goal-date" required>
+          </div>
+          <div class="form-group">
+            <label for="goal-category">Category</label>
+            <select id="goal-category">
+              <option value="tech">Technology 💻</option>
+              <option value="travel">Travel & Adventure ✈️</option>
+              <option value="savings">Emergency Savings 🏦</option>
+              <option value="car">Vehicle / Transport 🚗</option>
+              <option value="lifestyle">Lifestyle / Leisure ☕</option>
+              <option value="other">Other Goals 🌟</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Accent Accent Color</label>
+          <div class="color-picker-grid">
+            <label class="color-radio">
+              <input type="radio" name="goal-color" value="blue" checked>
+              <span class="color-dot color-blue"></span>
+            </label>
+            <label class="color-radio">
+              <input type="radio" name="goal-color" value="green">
+              <span class="color-dot color-green"></span>
+            </label>
+            <label class="color-radio">
+              <input type="radio" name="goal-color" value="purple">
+              <span class="color-dot color-purple"></span>
+            </label>
+            <label class="color-radio">
+              <input type="radio" name="goal-color" value="orange">
+              <span class="color-dot color-orange"></span>
+            </label>
+            <label class="color-radio">
+              <input type="radio" name="goal-color" value="pink">
+              <span class="color-dot color-pink"></span>
+            </label>
+            <label class="color-radio">
+              <input type="radio" name="goal-color" value="teal">
+              <span class="color-dot color-teal"></span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-goal-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Goal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Deposit / Log Contribution -->
+  <div class="modal-backdrop" id="deposit-modal">
+    <div class="modal-card modal-card-small">
+      <div class="modal-header">
+        <h2>Add Savings Deposit</h2>
+        <button class="modal-close-btn" id="btn-close-deposit-modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <form id="deposit-form" class="modal-form">
+        <input type="hidden" id="deposit-goal-id">
+        <div class="deposit-goal-summary" id="deposit-goal-summary-text">
+          Logging savings for Goal
+        </div>
+        <div class="form-group">
+          <label for="deposit-amount">Amount <span class="currency-label-sign">($)</span></label>
+          <input type="number" id="deposit-amount" min="1" step="0.01" placeholder="50.00" required autofocus>
+        </div>
+        <div class="form-group">
+          <label for="deposit-type">Transaction Type</label>
+          <select id="deposit-type">
+            <option value="deposit">Deposit (Add Savings) 📥</option>
+            <option value="withdraw">Withdraw (Spend / Use Savings) 📤</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-deposit-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Log Savings</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Goal Details & Logs -->
+  <div class="modal-backdrop" id="goal-detail-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="detail-modal-title">Goal Details</h2>
+        <button class="modal-close-btn" id="btn-close-detail-modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-form" style="padding-bottom: 24px;">
+        <div class="detail-hero-card" id="detail-hero-area">
+          <!-- Dynamically populated stats -->
+        </div>
+        
+        <div class="detail-section-header">
+          <h3>Goal Transaction History</h3>
+          <button class="goal-btn-deposit" id="btn-detail-add-deposit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Log Savings
+          </button>
+        </div>
+        
+        <div class="detail-logs-list" id="detail-logs-container">
+          <!-- Dynamically populated log rows -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti/Celebration overlay -->
+  <div class="celebration-overlay" id="celebration-overlay">
+    <div class="celebration-card">
+      <div class="celebration-emoji">🎉</div>
+      <h2>Goal Achieved!</h2>
+      <p id="celebration-text">You have successfully saved enough for your goal!</p>
+      <button class="btn btn-primary" id="btn-close-celebration">Hooray!</button>
+    </div>
+  </div>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Supabase JS Library CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Main script loaded as an ES6 Module -->
+  <script type="module" src="src/js/main.js"></script>
+</body>
+</html>

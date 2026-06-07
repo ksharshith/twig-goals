@@ -1,0 +1,80 @@
+/* ====================================================
+   ANIMATION KEYFRAMES & MICRO-INTERACTIONS
+   ==================================================== */
+
+/* View Transition Fade In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-view {
+  animation: fadeIn 0.4s var(--ease-in-out) forwards;
+}
+
+/* Emoji Celebration Bouncing Loop */
+@keyframes emojiBounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-16px) scale(1.12);
+  }
+}
+
+.celebration-overlay.active .celebration-emoji {
+  animation: emojiBounce 0.8s var(--ease-elastic) infinite alternate;
+}
+
+/* Confetti HTML5 Canvas Layering */
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1999;
+}
+
+/* Card hover and scale micro-animations */
+.btn,
+.nav-item,
+.stat-card,
+.goal-card,
+.insight-row,
+.theme-option,
+.goal-btn-deposit {
+  transition: transform var(--duration-fast) var(--ease-in-out),
+              background-color var(--duration-fast) var(--ease-in-out),
+              border-color var(--duration-fast) var(--ease-in-out),
+              box-shadow var(--duration-fast) var(--ease-in-out),
+              color var(--duration-fast) var(--ease-in-out);
+}
+
+.btn:active,
+.goal-btn-deposit:active {
+  transform: scale(0.96) !important;
+}
+
+/* Ring rotation setup (Standard circular animation rotation) */
+.rings-svg-wrapper {
+  animation: spinIntro 1.2s var(--ease-in-out) forwards;
+}
+
+@keyframes spinIntro {
+  from {
+    transform: scale(0.85) rotate(-180deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(-90deg);
+    opacity: 1;
+  }
+}
